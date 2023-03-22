@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { Home, Main } from "./page";
+import { Navbar, Sidebar } from "./component";
+import { dummyData } from "./assets/data";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
+  const [selectedFloor, setSelectedFloor] = useState(null);
+  const handleFloorSelect = (floor) => {
+    setSelectedFloor(floor);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {/* <Router>
+      <Routes>
+        <Route path="/:floor" component={Main} />
+        <Route path="/" component={Home} />
+      </Routes>
+    </Router> */}
+      <Navbar floors={dummyData} onFloorSelect={handleFloorSelect} />
+      {selectedFloor === null ? (
+        <Home />
+      ) : (
+        <Main item={dummyData} selectedFloor={selectedFloor} />
+      )}
+    </>
   );
 }
 
